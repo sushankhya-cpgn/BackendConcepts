@@ -5,6 +5,14 @@ const PORT = 3000;
 app.use(express.json());
 app.use(cors());
 
+let i = 0;
+function send(res:Response){
+
+    res.write(`data: ${Date.now()}\n\n`)
+    setTimeout(()=>send(res),1000);
+    
+}
+
 app.get("/events",(req:Request,res:Response)=>{
     res.writeHead(200,{
         "Content-type":"text/event-stream",
@@ -13,13 +21,10 @@ app.get("/events",(req:Request,res:Response)=>{
     })
 
     
-
-const interval = setInterval(()=>{
-    res.write(`data: ${Date.now()}\n\n`);
-},2000)
+send(res)
 
 req.on("close",()=>{
-    clearInterval(interval);
+  
     res.end();
 })
 
