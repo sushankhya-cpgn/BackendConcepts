@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long pooling</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Long Pooling</h1>
+    <div id="messages"></div>
+    <script>
+        function poll(){
+            fetch('http://localhost:3000/poll').then(response=>response.json()).then(data=>{
+                console.log(data);
+                const messageDiv = document.getElementById('messages');
+                const newMessage = document.createElement('div');
+                newMessage.textContent = data.message ?? "No new message";
+                messageDiv.appendChild(newMessage);
+                poll();
+            })
+        }
+        poll();
+    </script>
+</body>
+</html>
