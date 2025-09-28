@@ -3,7 +3,6 @@ const app = express();
 const PORT = 3000;
 app.use(express.json());
 
-let client:express.Response[] = [];
 let messages:string[] = [];
 
 app.use("/message",(req,res)=>{
@@ -13,7 +12,7 @@ app.use("/message",(req,res)=>{
     }
 })
 
-app.use("/pool",(req,res)=>{
+app.use("/poll",(req,res)=>{
     if(messages.length>0){
         const message = messages.shift();
         return res.json({message:message,timeStamp:new Date().toISOString()});
